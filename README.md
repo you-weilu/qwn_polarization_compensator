@@ -1,4 +1,4 @@
-# qwn_polarization_compensator
+# Qwn Polarization Compensator
 Real-time Stokes-parameter computation and QWP/HWP/LCR correction math for QWN polarization compensation on FPGA.
 
 ## Background
