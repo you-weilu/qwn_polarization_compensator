@@ -44,8 +44,8 @@ dependency.
 | Module | Responsibility |
 |---|---|
 | `qwn_polarization_compensator` | Top module — instantiates and connects all submodules below |
-| `adc_interface_stub` | Placeholder for the real ADC interface; currently just a data source for simulation |
+| `adc_interface_stub` | SPI ADC interface |
 | `state_decoder` | Combines `stokes_calc` and `angle_calc`: converts raw ADC samples into normalized Stokes values (S1, S2, S3) and then computes ψ (orientation), χ (ellipticity), δ (residual phase angle) via Eq. 3 |
 | `threshold_checker` | Compares the decoded V and D reference states against tolerance thresholds; asserts `beyond_threshold` to trigger a correction cycle or `within_threshold` to loop back for the next measurement |
 | `correction_solver` | Latches the V-pass result (ψ, χ, δ) into an internal register on the first pass; combines it with the D-pass result on the second pass to compute the required QWP angle, HWP angle, and LCR retardance following the paper's 3-step algorithm (Sec. 3A) |
-| `output_interface_stub` | Placeholder for driving the physical waveplate stages and LCR voltage |
+| `output_interface_stub` | Drives the physical waveplate stages and LCR voltage |
