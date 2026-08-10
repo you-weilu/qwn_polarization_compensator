@@ -26,25 +26,25 @@ stages are the current bottleneck).
 
 ```mermaid
 flowchart TD
-    subgraph TOP["Top module: qwn_polarization_compensator"]
-        A["ADC Interface (stub)<br/>Raw digitized samples in"]
-        B["Stokes Calculator<br/>Computes S1, S2, S3"]
-        C["Angle Calculator (Eq. 3)<br/>ψ, χ, δ"]
-        D["Correction Solver<br/>θ_QWP, θ_HWP, Γ_LCR"]
-        E["Threshold Logic<br/>Trigger compensation?"]
-        F["Output Interface (stub)<br/>Drives stages + LCR"]
-        A --> B --> C --> D --> E --> F
-    end
-    classDef stub fill:#ddd,stroke:#888,color:#333;
-    classDef core fill:#b2dfdb,stroke:#00695c,color:#003d33;
-    class A,F stub;
-    class B,C,D,E core;
+    A["ADC Interface"] --> B["State Decoder"]
+    B --> C["Threshold Checker"]
+    C -->|beyond_threshold| D["Correction Solver"]
+    D --> E["Output Interface"]
+    C -->|within_threshold| A
 ```
 
-Gray modules (ADC Interface, Output Interface) are hardware-dependent stubs —
-they'll be filled in once an ADC and compensator-driver interface are chosen.
-Teal modules are the math core and can be built and simulated with synthetic
-test vectors now, with no hardware dependency.
+The hardware performs **two passes** per compensation cycle: the first pass
+digitizes the V-polarization header, the State Decoder computes its Stokes
+parameters and angles, and the Correction Solver latches the result into an
+internal register. The second pass then repeats the same pipeline for the
+D-polarization header. Only after both results are available does the Threshold
+Checker decide whether a correction is needed.
+
+ADC Interface and Output Interface are hardware-dependent stubs — they will be
+filled in once an ADC and compensator-driver interface are chosen. The State
+Decoder, Threshold Checker, and Correction Solver form the math core and can
+be built and simulated with synthetic test vectors now, with no hardware
+dependency.
 
 ## Modules
 
@@ -52,8 +52,7 @@ test vectors now, with no hardware dependency.
 |---|---|
 | `qwn_polarization_compensator` | Top module — instantiates and connects all submodules below |
 | `adc_interface_stub` | Placeholder for the real ADC interface; currently just a data source for simulation |
-| `stokes_calc` | Converts a raw digitized ADC sample into a normalized Stokes value (S1, S2, or S3) |
-| `angle_calc` | Implements Eq. 3: computes ψ (orientation), χ (ellipticity), δ (residual phase angle) from Stokes values |
-| `correction_solver` | Computes the required QWP angle, HWP angle, and LCR retardance from ψ, χ, δ, following the paper's 3-step algorithm (Sec. 3A) |
-| `threshold_logic` | Compares measured V/D reference states against tolerance thresholds and decides whether to trigger a compensation cycle |
+| `state_decoder` | Combines `stokes_calc` and `angle_calc`: converts raw ADC samples into normalized Stokes values (S1, S2, S3) and then computes ψ (orientation), χ (ellipticity), δ (residual phase angle) via Eq. 3 |
+| `threshold_checker` | Compares the decoded V and D reference states against tolerance thresholds; asserts `beyond_threshold` to trigger a correction cycle or `within_threshold` to loop back for the next measurement |
+| `correction_solver` | Latches the V-pass result (ψ, χ, δ) into an internal register on the first pass; combines it with the D-pass result on the second pass to compute the required QWP angle, HWP angle, and LCR retardance following the paper's 3-step algorithm (Sec. 3A) |
 | `output_interface_stub` | Placeholder for driving the physical waveplate stages and LCR voltage |
