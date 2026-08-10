@@ -24,14 +24,7 @@ stages are the current bottleneck).
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    A["ADC Interface"] --> B["State Decoder"]
-    B --> C["Threshold Checker"]
-    C -->|beyond_threshold| D["Correction Solver"]
-    D --> E["Output Interface"]
-    C -->|within_threshold| A
-```
+![Block diagram](docs/qwn_polarization_compensator.png)
 
 The hardware performs **two passes** per compensation cycle: the first pass
 digitizes the V-polarization header, the State Decoder computes its Stokes
