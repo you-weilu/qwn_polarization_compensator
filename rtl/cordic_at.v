@@ -19,12 +19,12 @@ module cordic_at #(
     input  wire signed [W-1:0]   y_in,     // y component, Q1.(W-2) signed fixed-point
     input  wire                  in_valid, // high for one cycle when x_in/y_in are valid
 
-    // arctan(y_in / x_in) in Q3.(W-3) format (scale = 2^(W-3)) 
+    // arctan(y_in / x_in) in Q2.(W-3) format (scale = 2^(W-3)) 
     // we need 3 int bits to represent range [-pi, pi]
     output wire signed [W-1:0]   angle_out,
     output wire                  out_valid
 );
-    // returns atan(2^-idx) in Q3.(W-3) format: atan_lut[i] = round(atan(2^-i) * 2^(W-3))
+    // returns atan(2^-idx) in Q2.(W-3) format: atan_lut[i] = round(atan(2^-i) * 2^(W-3))
     // precomputed for W=18 (scale = 2^15 = 32768). regenerate if W changes.
     function signed [W-1:0] atan_lut;
         input integer idx;
@@ -68,7 +68,7 @@ module cordic_at #(
                 if (!y_in[W-1]) begin      // quadrant 2 (x<0, y>=0): rotate -90 deg, offset z by +pi/2
                     x_pipe[0] <=  y_in;
                     y_pipe[0] <= -x_in;
-                    z_pipe[0] <=  18'sd51472;  // pi/2 in Q3.(W-3): round(pi/2 * 2^15)
+                    z_pipe[0] <=  18'sd51472;  // pi/2 in Q2.(W-3): round(pi/2 * 2^15)
                 end else begin             // quadrant 3 (x<0, y<0): rotate +90 deg, offset z by -pi/2
                     x_pipe[0] <= -y_in;
                     y_pipe[0] <=  x_in;
