@@ -15,6 +15,6 @@ with open(output_path, "w") as f:
         s3_norm = k / n_entries # normalized |S3| in [0, 1)
         val     = round(math.sqrt(1.0 - s3_norm**2) * scale)
         val     = min(val, 2**W - 1) # clamp (shouldn't trigger)
-        f.write(f"{val:05x}\n")
+        f.write(f"{val:05x}\n") # 05: pad with 5 leading 0s, x: hex
 
 print(f"wrote {n_entries} entries to {output_path}")
