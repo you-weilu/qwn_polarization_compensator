@@ -4,7 +4,7 @@
 
 module sqrt_lut #(
     parameter W        = 18,             // output word width, Q1.(W-2) format
-    parameter LUT_FILE = "sqrt_lut.hex"  // precomputed by scripts/gen_sqrt_lut.py
+    parameter LUT_FILE = "rtl/sqrt_lut.hex"  // precomputed by scripts/gen_sqrt_lut.py
 )(
     input  wire                clk,
     input  wire                rst_n,    // active-low asynchronous reset

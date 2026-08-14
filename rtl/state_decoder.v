@@ -114,8 +114,8 @@ module state_decoder #(
             delta_out <= 0;
             out_valid <= 0;
         end else begin
-            psi_out   <= $signed(psi_raw)   >>> 1;
-            chi_out   <= $signed(chi_raw)   >>> 1;
+            psi_out   <= $signed(psi_raw) >>> 1;
+            chi_out   <= $signed(chi_raw) >>> 1;
             delta_out <= delta_raw;
             out_valid <= chi_valid; // all 3 valid signals fire same cycle
         end

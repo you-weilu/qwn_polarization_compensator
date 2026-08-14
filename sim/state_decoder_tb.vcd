@@ -1,0 +1,1522 @@
+$date
+	Fri Aug 14 15:35:20 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module state_decoder_tb $end
+$var wire 18 ! psi_out [17:0] $end
+$var wire 1 " out_valid $end
+$var wire 18 # delta_out [17:0] $end
+$var wire 18 $ chi_out [17:0] $end
+$var parameter 44 % ADC_MAX $end
+$var parameter 32 & ADC_W $end
+$var parameter 47 ' ANGLE_SCALE $end
+$var parameter 32 ( ANGLE_W $end
+$var parameter 32 ) ONE_OVER_SQRT2 $end
+$var parameter 32 * ONE_OVER_SQRT3 $end
+$var parameter 32 + STOKES_W $end
+$var parameter 32 , TOLERANCE $end
+$var reg 1 - clk $end
+$var reg 1 . in_valid $end
+$var reg 1 / rst_n $end
+$var reg 12 0 s1_raw [11:0] $end
+$var reg 12 1 s2_raw [11:0] $end
+$var reg 12 2 s3_raw [11:0] $end
+$scope module dut $end
+$var wire 1 - clk $end
+$var wire 1 . in_valid $end
+$var wire 1 / rst_n $end
+$var wire 12 3 s1_raw [11:0] $end
+$var wire 12 4 s2_raw [11:0] $end
+$var wire 12 5 s3_raw [11:0] $end
+$var wire 1 6 sqrt_valid $end
+$var wire 18 7 sqrt_s3 [17:0] $end
+$var wire 18 8 s3 [17:0] $end
+$var wire 18 9 s2 [17:0] $end
+$var wire 18 : s1 [17:0] $end
+$var wire 1 ; psi_valid $end
+$var wire 18 < psi_raw [17:0] $end
+$var wire 1 = delta_valid $end
+$var wire 18 > delta_raw [17:0] $end
+$var wire 1 ? chi_valid $end
+$var wire 18 @ chi_raw [17:0] $end
+$var parameter 32 A ADC_W $end
+$var parameter 32 B ANGLE_W $end
+$var parameter 32 C STOKES_W $end
+$var reg 18 D chi_out [17:0] $end
+$var reg 18 E delta_out [17:0] $end
+$var reg 1 F in_valid_d $end
+$var reg 1 " out_valid $end
+$var reg 18 G psi_out [17:0] $end
+$var reg 18 H s1_d [17:0] $end
+$var reg 18 I s2_d [17:0] $end
+$var reg 18 J s3_d [17:0] $end
+$scope module cordic_chi $end
+$var wire 18 K angle_out [17:0] $end
+$var wire 1 - clk $end
+$var wire 1 ? out_valid $end
+$var wire 1 / rst_n $end
+$var wire 18 L y_in [17:0] $end
+$var wire 18 M x_in [17:0] $end
+$var wire 1 6 in_valid $end
+$var parameter 32 N ITERATIONS $end
+$var parameter 32 O W $end
+$scope function atan_lut $end
+$var integer 32 P idx [31:0] $end
+$upscope $end
+$scope begin cordic_stage[0] $end
+$var parameter 2 Q i $end
+$upscope $end
+$scope begin cordic_stage[1] $end
+$var parameter 2 R i $end
+$upscope $end
+$scope begin cordic_stage[2] $end
+$var parameter 3 S i $end
+$upscope $end
+$scope begin cordic_stage[3] $end
+$var parameter 3 T i $end
+$upscope $end
+$scope begin cordic_stage[4] $end
+$var parameter 4 U i $end
+$upscope $end
+$scope begin cordic_stage[5] $end
+$var parameter 4 V i $end
+$upscope $end
+$scope begin cordic_stage[6] $end
+$var parameter 4 W i $end
+$upscope $end
+$scope begin cordic_stage[7] $end
+$var parameter 4 X i $end
+$upscope $end
+$scope begin cordic_stage[8] $end
+$var parameter 5 Y i $end
+$upscope $end
+$scope begin cordic_stage[9] $end
+$var parameter 5 Z i $end
+$upscope $end
+$scope begin cordic_stage[10] $end
+$var parameter 5 [ i $end
+$upscope $end
+$scope begin cordic_stage[11] $end
+$var parameter 5 \ i $end
+$upscope $end
+$scope begin cordic_stage[12] $end
+$var parameter 5 ] i $end
+$upscope $end
+$scope begin cordic_stage[13] $end
+$var parameter 5 ^ i $end
+$upscope $end
+$scope begin cordic_stage[14] $end
+$var parameter 5 _ i $end
+$upscope $end
+$scope begin cordic_stage[15] $end
+$var parameter 5 ` i $end
+$upscope $end
+$upscope $end
+$scope module cordic_delta $end
+$var wire 18 a angle_out [17:0] $end
+$var wire 1 - clk $end
+$var wire 1 F in_valid $end
+$var wire 1 = out_valid $end
+$var wire 1 / rst_n $end
+$var wire 18 b x_in [17:0] $end
+$var wire 18 c y_in [17:0] $end
+$var parameter 32 d ITERATIONS $end
+$var parameter 32 e W $end
+$scope function atan_lut $end
+$var integer 32 f idx [31:0] $end
+$upscope $end
+$scope begin cordic_stage[0] $end
+$var parameter 2 g i $end
+$upscope $end
+$scope begin cordic_stage[1] $end
+$var parameter 2 h i $end
+$upscope $end
+$scope begin cordic_stage[2] $end
+$var parameter 3 i i $end
+$upscope $end
+$scope begin cordic_stage[3] $end
+$var parameter 3 j i $end
+$upscope $end
+$scope begin cordic_stage[4] $end
+$var parameter 4 k i $end
+$upscope $end
+$scope begin cordic_stage[5] $end
+$var parameter 4 l i $end
+$upscope $end
+$scope begin cordic_stage[6] $end
+$var parameter 4 m i $end
+$upscope $end
+$scope begin cordic_stage[7] $end
+$var parameter 4 n i $end
+$upscope $end
+$scope begin cordic_stage[8] $end
+$var parameter 5 o i $end
+$upscope $end
+$scope begin cordic_stage[9] $end
+$var parameter 5 p i $end
+$upscope $end
+$scope begin cordic_stage[10] $end
+$var parameter 5 q i $end
+$upscope $end
+$scope begin cordic_stage[11] $end
+$var parameter 5 r i $end
+$upscope $end
+$scope begin cordic_stage[12] $end
+$var parameter 5 s i $end
+$upscope $end
+$scope begin cordic_stage[13] $end
+$var parameter 5 t i $end
+$upscope $end
+$scope begin cordic_stage[14] $end
+$var parameter 5 u i $end
+$upscope $end
+$scope begin cordic_stage[15] $end
+$var parameter 5 v i $end
+$upscope $end
+$upscope $end
+$scope module cordic_psi $end
+$var wire 18 w angle_out [17:0] $end
+$var wire 1 - clk $end
+$var wire 1 F in_valid $end
+$var wire 1 ; out_valid $end
+$var wire 1 / rst_n $end
+$var wire 18 x x_in [17:0] $end
+$var wire 18 y y_in [17:0] $end
+$var parameter 32 z ITERATIONS $end
+$var parameter 32 { W $end
+$scope function atan_lut $end
+$var integer 32 | idx [31:0] $end
+$upscope $end
+$scope begin cordic_stage[0] $end
+$var parameter 2 } i $end
+$upscope $end
+$scope begin cordic_stage[1] $end
+$var parameter 2 ~ i $end
+$upscope $end
+$scope begin cordic_stage[2] $end
+$var parameter 3 !" i $end
+$upscope $end
+$scope begin cordic_stage[3] $end
+$var parameter 3 "" i $end
+$upscope $end
+$scope begin cordic_stage[4] $end
+$var parameter 4 #" i $end
+$upscope $end
+$scope begin cordic_stage[5] $end
+$var parameter 4 $" i $end
+$upscope $end
+$scope begin cordic_stage[6] $end
+$var parameter 4 %" i $end
+$upscope $end
+$scope begin cordic_stage[7] $end
+$var parameter 4 &" i $end
+$upscope $end
+$scope begin cordic_stage[8] $end
+$var parameter 5 '" i $end
+$upscope $end
+$scope begin cordic_stage[9] $end
+$var parameter 5 (" i $end
+$upscope $end
+$scope begin cordic_stage[10] $end
+$var parameter 5 )" i $end
+$upscope $end
+$scope begin cordic_stage[11] $end
+$var parameter 5 *" i $end
+$upscope $end
+$scope begin cordic_stage[12] $end
+$var parameter 5 +" i $end
+$upscope $end
+$scope begin cordic_stage[13] $end
+$var parameter 5 ," i $end
+$upscope $end
+$scope begin cordic_stage[14] $end
+$var parameter 5 -" i $end
+$upscope $end
+$scope begin cordic_stage[15] $end
+$var parameter 5 ." i $end
+$upscope $end
+$upscope $end
+$scope module sqrt_inst $end
+$var wire 1 - clk $end
+$var wire 1 . in_valid $end
+$var wire 1 / rst_n $end
+$var wire 18 /" s3_in [17:0] $end
+$var wire 18 0" s3_abs [17:0] $end
+$var wire 12 1" lut_idx_raw [11:0] $end
+$var wire 11 2" lut_idx [10:0] $end
+$var parameter 33 3" IDX_SHIFT $end
+$var parameter 128 4" LUT_FILE $end
+$var parameter 32 5" W $end
+$var reg 1 6 out_valid $end
+$var reg 18 6" sqrt_out [17:0] $end
+$upscope $end
+$upscope $end
+$scope task check $end
+$var reg 18 7" got [17:0] $end
+$var integer 32 8" expected [31:0] $end
+$upscope $end
+$scope task send $end
+$var reg 12 9" s1v [11:0] $end
+$var reg 12 :" s2v [11:0] $end
+$var reg 12 ;" s3v [11:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b10010 5"
+b1110010011101000110110000101111011100110111000101110010011101000101111101101100011101010111010000101110011010000110010101111000 4"
+b101 3"
+b1111 ."
+b1110 -"
+b1101 ,"
+b1100 +"
+b1011 *"
+b1010 )"
+b1001 ("
+b1000 '"
+b111 &"
+b110 %"
+b101 $"
+b100 #"
+b11 ""
+b10 !"
+b1 ~
+b0 }
+b10010 {
+b10000 z
+b1111 v
+b1110 u
+b1101 t
+b1100 s
+b1011 r
+b1010 q
+b1001 p
+b1000 o
+b111 n
+b110 m
+b101 l
+b100 k
+b11 j
+b10 i
+b1 h
+b0 g
+b10010 e
+b10000 d
+b1111 `
+b1110 _
+b1101 ^
+b1100 ]
+b1011 \
+b1010 [
+b1001 Z
+b1000 Y
+b111 X
+b110 W
+b101 V
+b100 U
+b11 T
+b10 S
+b1 R
+b0 Q
+b10010 O
+b10000 N
+b10010 C
+b10010 B
+b1100 A
+b11 ,
+b10010 +
+b10010011110 *
+b10110101000 )
+b10010 (
+b1000000000000000 '
+b1100 &
+b11111111111 %
+$end
+#0
+$dumpvars
+bx ;"
+bx :"
+bx 9"
+bx 8"
+bx 7"
+b0 6"
+b0 2"
+b0 1"
+b0 0"
+b0 /"
+bx |
+b0 y
+b0 x
+b0 w
+bx f
+b0 c
+b0 b
+b0 a
+bx P
+b0 M
+b0 L
+b0 K
+b0 J
+b0 I
+b0 H
+b0 G
+0F
+b0 E
+b0 D
+b0 @
+0?
+b0 >
+0=
+b0 <
+0;
+b0 :
+b0 9
+b0 8
+b0 7
+06
+b0 5
+b0 4
+b0 3
+b0 2
+b0 1
+b0 0
+0/
+0.
+0-
+b0 $
+b0 #
+0"
+b0 !
+$end
+#5000
+1-
+#10000
+0-
+#15000
+1-
+#20000
+0-
+#25000
+1-
+#30000
+0-
+#35000
+b1 <
+b1 w
+b1 >
+b1 a
+b10000000000000000 7
+b10000000000000000 M
+b10000000000000000 6"
+b1 @
+b1 K
+b0 |
+b0 f
+b0 P
+1/
+1-
+#40000
+0-
+#45000
+b1 #
+b1 E
+b11 @
+b11 K
+b11 >
+b11 a
+b11 <
+b11 w
+b1111 P
+b1111 f
+b1111 |
+b0 ;"
+b0 :"
+b11111111111 9"
+1-
+#50000
+0-
+#55000
+b111 <
+b111 w
+b111 >
+b111 a
+b111 @
+b111 K
+b11 #
+b11 E
+b1 $
+b1 D
+b1 !
+b1 G
+b0 |
+b0 f
+b0 P
+1-
+#56000
+b1111111111100000 :
+1.
+b11111111111 0
+b11111111111 3
+#60000
+0-
+#65000
+b111 #
+b111 E
+b11 $
+b11 D
+b11 !
+b11 G
+1F
+b1111111111100000 H
+b1111111111100000 x
+b1111 @
+b1111 K
+16
+b1111 >
+b1111 a
+b1111 <
+b1111 w
+b1111 P
+b1111 f
+b1111 |
+1-
+#66000
+0.
+#70000
+0-
+#75000
+b11111 <
+b11111 w
+b11111 >
+b11111 a
+06
+b11111 @
+b11111 K
+0F
+b1111 #
+b1111 E
+b111 $
+b111 D
+b111 !
+b111 G
+b0 |
+b0 f
+b0 P
+1-
+#80000
+0-
+#85000
+b11111 #
+b11111 E
+b1111 $
+b1111 D
+b1111 !
+b1111 G
+b111111 @
+b111111 K
+b111111 >
+b111111 a
+b111111 <
+b111111 w
+b1111 P
+b1111 f
+b1111 |
+1-
+#90000
+0-
+#95000
+b1111111 <
+b1111111 w
+b1111111 >
+b1111111 a
+b1111111 @
+b1111111 K
+b111111 #
+b111111 E
+b11111 $
+b11111 D
+b11111 !
+b11111 G
+b0 |
+b0 f
+b0 P
+1-
+#100000
+0-
+#105000
+b1111111 #
+b1111111 E
+b111111 $
+b111111 D
+b111111 !
+b111111 G
+b11111111 @
+b11111111 K
+b11111111 >
+b11111111 a
+b11111111 <
+b11111111 w
+b1111 P
+b1111 f
+b1111 |
+1-
+#110000
+0-
+#115000
+b111111111 <
+b111111111 w
+b111111111 >
+b111111111 a
+b111111111 @
+b111111111 K
+b11111111 #
+b11111111 E
+b1111111 $
+b1111111 D
+b1111111 !
+b1111111 G
+b0 |
+b0 f
+b0 P
+1-
+#120000
+0-
+#125000
+b111111111 #
+b111111111 E
+b11111111 $
+b11111111 D
+b11111111 !
+b11111111 G
+b1111111111 @
+b1111111111 K
+b1111111111 >
+b1111111111 a
+b1111111111 <
+b1111111111 w
+b1111 P
+b1111 f
+b1111 |
+1-
+#130000
+0-
+#135000
+b11111111111 <
+b11111111111 w
+b11111111111 >
+b11111111111 a
+b11111111111 @
+b11111111111 K
+b1111111111 #
+b1111111111 E
+b111111111 $
+b111111111 D
+b111111111 !
+b111111111 G
+b0 |
+b0 f
+b0 P
+1-
+#140000
+0-
+#145000
+b11111111111 #
+b11111111111 E
+b1111111111 $
+b1111111111 D
+b1111111111 !
+b1111111111 G
+b111111111100 @
+b111111111100 K
+b111111111100 >
+b111111111100 a
+b111111111100 <
+b111111111100 w
+b1111 P
+b1111 f
+b1111 |
+1-
+#150000
+0-
+#155000
+b1111111100111 <
+b1111111100111 w
+b1111111100111 >
+b1111111100111 a
+b1111111100111 @
+b1111111100111 K
+b111111111100 #
+b111111111100 E
+b11111111110 $
+b11111111110 D
+b11111111110 !
+b11111111110 G
+b0 |
+b0 f
+b0 P
+1-
+#160000
+0-
+#165000
+b1111111100111 #
+b1111111100111 E
+b111111110011 $
+b111111110011 D
+b111111110011 !
+b111111110011 G
+b11111101000011 @
+b11111101000011 K
+b11111101000011 >
+b11111101000011 a
+b11111101000011 <
+b11111101000011 w
+b1111 P
+b1111 f
+b1111 |
+1-
+#170000
+0-
+#175000
+b111101010011011 <
+b111101010011011 w
+b111101010011011 >
+b111101010011011 a
+b111101010011011 @
+b111101010011011 K
+b11111101000011 #
+b11111101000011 E
+b1111110100001 $
+b1111110100001 D
+b1111110100001 !
+b1111110100001 G
+b0 |
+b0 f
+b0 P
+1-
+#180000
+0-
+#185000
+b111101010011011 #
+b111101010011011 E
+b11110101001101 $
+b11110101001101 D
+b11110101001101 !
+b11110101001101 G
+b1101111100100011 @
+b1101111100100011 K
+b1101111100100011 >
+b1101111100100011 a
+b1101111100100011 <
+b1101111100100011 w
+b1111 P
+b1111 f
+b1111 |
+1-
+#190000
+0-
+#195000
+b1101111100100011 #
+b1101111100100011 E
+b110111110010001 $
+b110111110010001 D
+b110111110010001 !
+b110111110010001 G
+b0 |
+b0 f
+b0 P
+1-
+#200000
+0-
+#205000
+b111111111111111111 @
+b111111111111111111 K
+b1111 P
+b1111 f
+b1111 |
+1-
+#210000
+0-
+#215000
+b111111111111111111 $
+b111111111111111111 D
+b0 |
+b0 f
+b0 P
+1-
+#220000
+0-
+#225000
+b1111 P
+b1111 f
+b1111 |
+1-
+#230000
+0-
+#235000
+b111111111111111111 <
+b111111111111111111 w
+1;
+1=
+1?
+b0 |
+b0 f
+b0 P
+1-
+#240000
+0-
+#245000
+b11111111111 :"
+b0 9"
+b0 8"
+b111111111111111111 7"
+1"
+b111111111111111111 !
+b111111111111111111 G
+0?
+0=
+0;
+b1111 P
+b1111 f
+b1111 |
+1-
+#250000
+0-
+#255000
+0"
+b0 |
+b0 f
+b0 P
+1-
+#256000
+b1111111111100000 9
+b0 :
+1.
+b11111111111 1
+b11111111111 4
+b0 0
+b0 3
+#260000
+0-
+#265000
+1F
+b1111111111100000 I
+b1111111111100000 b
+b1111111111100000 y
+b0 H
+b0 x
+16
+b1111 P
+b1111 f
+b1111 |
+1-
+#266000
+0.
+#270000
+0-
+#275000
+06
+0F
+b0 |
+b0 f
+b0 P
+1-
+#280000
+0-
+#285000
+b1111 P
+b1111 f
+b1111 |
+1-
+#290000
+0-
+#295000
+b0 |
+b0 f
+b0 P
+1-
+#300000
+0-
+#305000
+b1111 P
+b1111 f
+b1111 |
+1-
+#310000
+0-
+#315000
+b0 |
+b0 f
+b0 P
+1-
+#320000
+0-
+#325000
+b1111 P
+b1111 f
+b1111 |
+1-
+#330000
+0-
+#335000
+b0 |
+b0 f
+b0 P
+1-
+#340000
+0-
+#345000
+b1111 P
+b1111 f
+b1111 |
+1-
+#350000
+0-
+#355000
+b0 |
+b0 f
+b0 P
+1-
+#360000
+0-
+#365000
+b1111 P
+b1111 f
+b1111 |
+1-
+#370000
+0-
+#375000
+b0 |
+b0 f
+b0 P
+1-
+#380000
+0-
+#385000
+b1111 P
+b1111 f
+b1111 |
+1-
+#390000
+0-
+#395000
+b0 |
+b0 f
+b0 P
+1-
+#400000
+0-
+#405000
+b1111 P
+b1111 f
+b1111 |
+1-
+#410000
+0-
+#415000
+b0 |
+b0 f
+b0 P
+1-
+#420000
+0-
+#425000
+b1111 P
+b1111 f
+b1111 |
+1-
+#430000
+0-
+#435000
+b1100100100010001 <
+b1100100100010001 w
+1;
+b111111111111111111 >
+b111111111111111111 a
+1=
+1?
+b0 |
+b0 f
+b0 P
+1-
+#440000
+0-
+#445000
+b10110101000 :"
+b10110101000 9"
+b0 8"
+b111111111111111111 7"
+1"
+b111111111111111111 #
+b111111111111111111 E
+b110010010001000 !
+b110010010001000 G
+0?
+0=
+0;
+b1111 P
+b1111 f
+b1111 |
+1-
+#450000
+0-
+#455000
+0"
+b0 |
+b0 f
+b0 P
+1-
+#456000
+b1011010100000000 9
+b1011010100000000 :
+1.
+b10110101000 1
+b10110101000 4
+b10110101000 0
+b10110101000 3
+#460000
+0-
+#465000
+1F
+b1011010100000000 I
+b1011010100000000 b
+b1011010100000000 y
+b1011010100000000 H
+b1011010100000000 x
+16
+b1111 P
+b1111 f
+b1111 |
+1-
+#466000
+0.
+#470000
+0-
+#475000
+06
+0F
+b0 |
+b0 f
+b0 P
+1-
+#480000
+0-
+#485000
+b1111 P
+b1111 f
+b1111 |
+1-
+#490000
+0-
+#495000
+b0 |
+b0 f
+b0 P
+1-
+#500000
+0-
+#505000
+b1111 P
+b1111 f
+b1111 |
+1-
+#510000
+0-
+#515000
+b0 |
+b0 f
+b0 P
+1-
+#520000
+0-
+#525000
+b1111 P
+b1111 f
+b1111 |
+1-
+#530000
+0-
+#535000
+b0 |
+b0 f
+b0 P
+1-
+#540000
+0-
+#545000
+b1111 P
+b1111 f
+b1111 |
+1-
+#550000
+0-
+#555000
+b0 |
+b0 f
+b0 P
+1-
+#560000
+0-
+#565000
+b1111 P
+b1111 f
+b1111 |
+1-
+#570000
+0-
+#575000
+b0 |
+b0 f
+b0 P
+1-
+#580000
+0-
+#585000
+b1111 P
+b1111 f
+b1111 |
+1-
+#590000
+0-
+#595000
+b0 |
+b0 f
+b0 P
+1-
+#600000
+0-
+#605000
+b1111 P
+b1111 f
+b1111 |
+1-
+#610000
+0-
+#615000
+b0 |
+b0 f
+b0 P
+1-
+#620000
+0-
+#625000
+b1111 P
+b1111 f
+b1111 |
+1-
+#630000
+0-
+#635000
+b110010010000111 <
+b110010010000111 w
+1;
+1=
+1?
+b0 |
+b0 f
+b0 P
+1-
+#640000
+0-
+#645000
+b10110101000 ;"
+b0 9"
+b0 8"
+b111111111111111111 7"
+1"
+b11001001000011 !
+b11001001000011 G
+0?
+0=
+0;
+b1111 P
+b1111 f
+b1111 |
+1-
+#650000
+0-
+#655000
+0"
+b0 |
+b0 f
+b0 P
+1-
+#656000
+b10110101000 2"
+b10110101000 1"
+b1011010100000000 0"
+b1011010100000000 8
+b1011010100000000 /"
+b0 :
+1.
+b10110101000 2
+b10110101000 5
+b0 0
+b0 3
+#660000
+0-
+#665000
+1F
+b1011010100000000 J
+b1011010100000000 L
+b1011010100000000 c
+b0 H
+b0 x
+b1011010100001010 7
+b1011010100001010 M
+b1011010100001010 6"
+16
+b1111 P
+b1111 f
+b1111 |
+1-
+#666000
+0.
+#670000
+0-
+#675000
+06
+0F
+b0 |
+b0 f
+b0 P
+1-
+#680000
+0-
+#685000
+b1111 P
+b1111 f
+b1111 |
+1-
+#690000
+0-
+#695000
+b0 |
+b0 f
+b0 P
+1-
+#700000
+0-
+#705000
+b1111 P
+b1111 f
+b1111 |
+1-
+#710000
+0-
+#715000
+b0 |
+b0 f
+b0 P
+1-
+#720000
+0-
+#725000
+b1111 P
+b1111 f
+b1111 |
+1-
+#730000
+0-
+#735000
+b0 |
+b0 f
+b0 P
+1-
+#740000
+0-
+#745000
+b1111 P
+b1111 f
+b1111 |
+1-
+#750000
+0-
+#755000
+b0 |
+b0 f
+b0 P
+1-
+#760000
+0-
+#765000
+b1111 P
+b1111 f
+b1111 |
+1-
+#770000
+0-
+#775000
+b0 |
+b0 f
+b0 P
+1-
+#780000
+0-
+#785000
+b1111 P
+b1111 f
+b1111 |
+1-
+#790000
+0-
+#795000
+b0 |
+b0 f
+b0 P
+1-
+#800000
+0-
+#805000
+b1111 P
+b1111 f
+b1111 |
+1-
+#810000
+0-
+#815000
+b0 |
+b0 f
+b0 P
+1-
+#820000
+0-
+#825000
+b1111 P
+b1111 f
+b1111 |
+1-
+#830000
+0-
+#835000
+b1100100100010001 <
+b1100100100010001 w
+1;
+b110010010000111 >
+b110010010000111 a
+1=
+b110010010000111 @
+b110010010000111 K
+1?
+b0 |
+b0 f
+b0 P
+1-
+#840000
+0-
+#845000
+b10010011110 ;"
+b10010011110 :"
+b10010011110 9"
+b110010010001000 8"
+b110010010000111 7"
+1"
+b110010010000111 #
+b110010010000111 E
+b11001001000011 $
+b11001001000011 D
+b110010010001000 !
+b110010010001000 G
+0?
+0=
+0;
+b1111 P
+b1111 f
+b1111 |
+1-
+#850000
+0-
+#855000
+0"
+b0 |
+b0 f
+b0 P
+1-
+#856000
+b10010011110 2"
+b10010011110 1"
+b1001001111000000 0"
+b1001001111000000 8
+b1001001111000000 /"
+b1001001111000000 9
+b1001001111000000 :
+1.
+b10010011110 2
+b10010011110 5
+b10010011110 1
+b10010011110 4
+b10010011110 0
+b10010011110 3
+#860000
+0-
+#865000
+1F
+b1001001111000000 J
+b1001001111000000 L
+b1001001111000000 c
+b1001001111000000 I
+b1001001111000000 b
+b1001001111000000 y
+b1001001111000000 H
+b1001001111000000 x
+b1101000100001111 7
+b1101000100001111 M
+b1101000100001111 6"
+16
+b1111 P
+b1111 f
+b1111 |
+1-
+#866000
+0.
+#870000
+0-
+#875000
+06
+0F
+b0 |
+b0 f
+b0 P
+1-
+#880000
+0-
+#885000
+b1111 P
+b1111 f
+b1111 |
+1-
+#890000
+0-
+#895000
+b0 |
+b0 f
+b0 P
+1-
+#900000
+0-
+#905000
+b1111 P
+b1111 f
+b1111 |
+1-
+#910000
+0-
+#915000
+b0 |
+b0 f
+b0 P
+1-
+#920000
+0-
+#925000
+b1111 P
+b1111 f
+b1111 |
+1-
+#930000
+0-
+#935000
+b0 |
+b0 f
+b0 P
+1-
+#940000
+0-
+#945000
+b1111 P
+b1111 f
+b1111 |
+1-
+#950000
+0-
+#955000
+b0 |
+b0 f
+b0 P
+1-
+#960000
+0-
+#965000
+b1111 P
+b1111 f
+b1111 |
+1-
+#970000
+0-
+#975000
+b0 |
+b0 f
+b0 P
+1-
+#980000
+0-
+#985000
+b1111 P
+b1111 f
+b1111 |
+1-
+#990000
+0-
+#995000
+b0 |
+b0 f
+b0 P
+1-
+#1000000
+0-
+#1005000
+b1111 P
+b1111 f
+b1111 |
+1-
+#1010000
+0-
+#1015000
+b0 |
+b0 f
+b0 P
+1-
+#1020000
+0-
+#1025000
+b1111 P
+b1111 f
+b1111 |
+1-
+#1030000
+0-
+#1035000
+b110010010000111 <
+b110010010000111 w
+1;
+1=
+b100111011000001 @
+b100111011000001 K
+1?
+b0 |
+b0 f
+b0 P
+1-
+#1040000
+0-
+#1045000
+b110010010001000 8"
+b110010010000111 7"
+1"
+b10011101100000 $
+b10011101100000 D
+b11001001000011 !
+b11001001000011 G
+0?
+0=
+0;
+b1111 P
+b1111 f
+b1111 |
+1-

@@ -40,16 +40,13 @@ module cordic_at_tb;
     localparam ANGLE_SCALE    = 1 << (W-3);  // 32768: Q2.15 angle scale [-pi, pi]
     localparam ONE_OVER_SQRT2 = 46341;        // round(1/sqrt(2) * 65536): max safe value for diagonal inputs
                                               // diagonal inputs must satisfy x^2 + y^2 <= 1 to avoid CORDIC overflow
-    localparam TOLERANCE      = 10;          // acceptable fixed-point error (~0.0003 rad)
-    // With 16 iterations, error is at most 2^-16 radians
-    // --> error in fixed point (Q2.15, scale = 2^15)= 2^-16 * 2^15 = 0.5
-    // Tolerance 20 * max error to give headroom for rounding in LUT constants
+    localparam TOLERANCE      = 5;           // 16 atan_lut entries each <=0.5 count rounding; worst-case sum = 8, partial cancellation expected
 
     // check task: passes if got is within TOLERANCE of expected
     task check;
-        input string        name;
+        input string         name;
         input signed [W-1:0] got;
-        input integer       expected;
+        input integer        expected;
         if ($signed(got) >= (expected - TOLERANCE) &&
             $signed(got) <= (expected + TOLERANCE))
             $display("PASS %s: got %0d  expected %0d", name, $signed(got), expected);
@@ -60,9 +57,9 @@ module cordic_at_tb;
     // send task: apply one input vector and wait for the result
     task send;
         input signed [W-1:0] xv, yv;
-        @(posedge clk);
+        @(posedge clk); #1;
         x_in = xv; y_in = yv; in_valid = 1;
-        @(posedge clk);
+        @(posedge clk); #1;
         in_valid = 0;
         @(posedge out_valid);
     endtask
