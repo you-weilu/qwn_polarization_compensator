@@ -29,34 +29,44 @@
 //   Paper target is 10 degrees on the Poincare sphere.
 //   10 deg × (pi/180) × 32768 ≈ 5726 counts.
 //   Exposed as a parameter so it can be tuned at synthesis time.
-//
-// LOGIC (purely combinational — just subtractors and comparators):
-//   Compute the absolute deviation of each measured angle from
-//   its ideal value. If ANY deviation exceeds THRESHOLD, assert
-//   beyond_threshold. If ALL are within THRESHOLD, assert
-//   within_threshold. The two outputs are always complementary.
-//
-// INPUTS:
-//   clk, rst_n       -- included for consistency but not used
-//                       (output is combinational)
-//   psi_V, chi_V     -- decoded angles from the V pass (Q2.15)
-//   psi_D, chi_D     -- decoded angles from the D pass (Q2.15)
-//   v_valid, d_valid -- strobes: one cycle high when each pass result is ready
-//
-// OUTPUTS:
-//   beyond_threshold -- high when correction is needed
-//   within_threshold -- high when channel is within tolerance (complement)
 
 module threshold_checker #(
-    parameter ANGLE_W   = 18,
-    parameter PSI_V_IDEAL = 18'sd51472,  // pi/2 in Q2.15
-    parameter PSI_D_IDEAL = 18'sd25736,  // pi/4 in Q2.15
-    parameter CHI_IDEAL   = 18'sd0,
+    parameter ANGLE_W     = 18,
+    parameter PSI_V_IDEAL = 18'sd51472,  // pi/2 in Q2.15: ideal psi for V pass
+    parameter PSI_D_IDEAL = 18'sd25736,  // pi/4 in Q2.15: ideal psi for D pass
+    parameter CHI_IDEAL   = 18'sd0,      // both V and D are linear so chi=0
     parameter THRESHOLD   = 18'sd5726    // 10 deg in Q2.15
 )(
-    // TODO: add ports
-);
+    input wire clk,
+    input wire rst_n,
+    input wire signed [ANGLE_W-1:0] psi,
+    input wire signed [ANGLE_W-1:0] chi,
+    input wire pass_sel, // 1 = V pass, 0 = D pass
+    input wire valid, // high when psi and chi are valid
 
-    // TODO: implement
+    output reg correction_needed // 1 = beyond threshold, 0 = within
+);
+    reg signed [ANGLE_W-1:0] V_psi;
+    reg signed [ANGLE_W-1:0] V_chi;
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            correction_needed <= 0;
+            V_psi             <= 0;
+            V_chi             <= 0;
+        end else if (valid && pass_sel) begin  // V pass arrived: latch
+            V_psi <= $signed(psi);
+            V_chi <= $signed(chi);
+        end else if (valid && !pass_sel) begin // D pass arrived: compare all four
+            correction_needed <= ($signed(V_psi) > $signed(PSI_V_IDEAL) + THRESHOLD) ||
+                                 ($signed(V_psi) < $signed(PSI_V_IDEAL) - THRESHOLD) ||
+                                 ($signed(V_chi) > $signed(CHI_IDEAL)   + THRESHOLD) ||
+                                 ($signed(V_chi) < $signed(CHI_IDEAL)   - THRESHOLD) ||
+                                 ($signed(psi)   > $signed(PSI_D_IDEAL) + THRESHOLD) ||
+                                 ($signed(psi)   < $signed(PSI_D_IDEAL) - THRESHOLD) ||
+                                 ($signed(chi)   > $signed(CHI_IDEAL)   + THRESHOLD) ||
+                                 ($signed(chi)   < $signed(CHI_IDEAL)   - THRESHOLD);
+        end
+    end
 
 endmodule
