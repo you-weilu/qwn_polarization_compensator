@@ -25,7 +25,8 @@ module cordic_at #(
     output wire                  out_valid
 );
     // returns atan(2^-idx) in Q2.(W-3) format: atan_lut[i] = round(atan(2^-i) * 2^(W-3))
-    // precomputed for W=18 (scale = 2^15 = 32768). regenerate if W changes.
+    // precomputed for ITERATIONS=16, W=18 (scale = 2^15 = 32768).
+    // regenerate values if ITERATIONS changes; regenerate scale if W changes.
     function signed [W-1:0] atan_lut;
         input integer idx;
         case (idx)
@@ -55,7 +56,7 @@ module cordic_at #(
     reg signed [W-1:0] z_pipe [0:ITERATIONS]; // z: angle accumulator
     reg valid_pipe [0:ITERATIONS];
 
-    // stage 0: register inputs and correct quadrant so x >= 0 before CORDIC iterations
+    // register inputs and correct quadrant so x >= 0 before CORDIC iterations
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             x_pipe[0]     <= 0;
@@ -82,7 +83,7 @@ module cordic_at #(
         end
     end
 
-    // stages 1..ITERATIONS: one CORDIC rotation per stage.
+    // for each ITERATIONS --> one CORDIC rotation per stage.
     // each stage drives y toward 0 by rotating by atan(2^-i), accumulating the angle in z.
     genvar i;
     generate
