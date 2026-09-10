@@ -1,6 +1,5 @@
 // sqrt_lut.v
-// Computes sqrt(1 - s3^2) via lookup table for the arcsin-to-arctan conversion:
-// arcsin(S3) = arctan(S3 / sqrt(1 - S3^2)).
+// Computes sqrt(1 - s3^2) via lookup table.
 
 module sqrt_lut #(
     parameter W        = 18,             // output word width, Q1.(W-2) format

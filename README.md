@@ -1,5 +1,5 @@
 # Qwn Polarization Compensator
-Real-time Stokes-parameter computation and QWP/HWP/LCR correction math for QWN polarization compensation on FPGA.
+Real-time Stokes-parameter computation and 3-LCR correction math for QWN polarization compensation on CertusPro-NX FPGA in the LFG672 package.
 
 ## Background
 
@@ -12,10 +12,13 @@ described in:
 In that work, classical reference headers (two non-orthogonal polarization
 states, V and D) co-propagate with a quantum payload through deployed fiber.
 A polarimeter measures how the headers' polarization was rotated by the
-fiber's birefringence, and a compensator (QWP + HWP + LCR) applies the inverse
+fiber's birefringence, and a compensator (3-LCR chain with fixed axes at 0°, 45°, 0°) applies the inverse
 rotation to correct the channel.
 
-Currently, the measurement chain is: polarimeter → MCC DAQ 1208HS (ADC) → PC
+The polarimeter used is a **Thorlabs TXP inline fiber polarimeter**, which
+outputs S1, S2, and S3 directly as analog voltages (±2.5 V, bipolar).
+
+Currently, the measurement chain is: TXP polarimeter → MCC DAQ 1208HS (ADC) → PC
 software (Python) computes the correction → USB commands to motorized stages
 and LCR driver. This project replaces the ADC + PC-software steps with
 an FPGA doing the Stokes calculation and correction math directly, which
@@ -44,8 +47,8 @@ dependency.
 | Module | Responsibility |
 |---|---|
 | `qwn_polarization_compensator` | Top module — instantiates and connects all submodules below |
-| `adc_interface` | SPI ADC interface (pending ADC selection) |
+| `adc_interface` | Reads S1, S2, S3 from the on-chip Nexus ADC (3 channels, bipolar ±2.5 V scaled to ADC range via analog frontend); stub pending implementation |
 | `state_decoder` | Converts raw ADC samples into normalized Stokes values (S1, S2, S3) and then computes ψ (orientation), χ (ellipticity), δ (residual phase angle) via Eq. 3 |
 | `threshold_checker` | Compares the decoded V and D reference states against tolerance thresholds; asserts `beyond_threshold` to trigger a correction cycle or `within_threshold` to loop back for the next measurement |
-| `correction_solver` | Latches the V-pass result (ψ, χ, δ) into an internal register on the first pass; combines it with the D-pass result on the second pass to compute the required QWP angle, HWP angle, and LCR retardance following the paper's 3-step algorithm (Sec. 3A) |
+| `correction_solver` | Latches the V-pass Stokes (S1, S2, S3) on the first pass; combines them with the D-pass Stokes on the second pass to compute the three LCR retardances (Γ1, Γ2, Γ3) for the 0°/45°/0° LCR chain using an analytic arctan algorithm |
 | `output_interface` | Drives the physical waveplate stages and LCR voltage |

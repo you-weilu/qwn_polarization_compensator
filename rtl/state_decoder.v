@@ -49,12 +49,14 @@ module state_decoder #(
     input  wire [ADC_W-1:0]    s1_raw,    // raw ADC sample (ADC_W-bit signed)
     input  wire [ADC_W-1:0]    s2_raw,
     input  wire [ADC_W-1:0]    s3_raw,
-    input  wire                in_valid,  
+    input  wire                in_valid,
+    input  wire                pass_sel,  // 1 = V pass, 0 = D pass (from top-level controller)
 
     output reg  [ANGLE_W-1:0]  psi_out,   // ψ, signed fixed-point
     output reg  [ANGLE_W-1:0]  chi_out,   // χ
     output reg  [ANGLE_W-1:0]  delta_out, // δ
     output reg                 out_valid,
+    output reg                 pass_sel_out, // pass_sel delayed to match out_valid
 
     // delayed Stokes values, valid on same cycle as out_valid
     output reg signed [STOKES_W-1:0] s1_out,
@@ -85,6 +87,7 @@ module state_decoder #(
     reg signed [STOKES_W-1:0] s2_d;
     reg signed [STOKES_W-1:0] s3_d;
     reg                       in_valid_d;
+    reg                       pass_sel_d;
 
     // delay logic
     always @(posedge clk or negedge rst_n) begin
@@ -93,27 +96,32 @@ module state_decoder #(
             s2_d       <= 0;
             s3_d       <= 0;
             in_valid_d <= 0;
+            pass_sel_d <= 0;
         end else begin
             s1_d       <= s1;
             s2_d       <= s2;
             s3_d       <= s3;
             in_valid_d <= in_valid;
+            pass_sel_d <= pass_sel;
         end
     end
 
     // Stokes delay pipeline: CORDIC_ITER+1 stages so s1/s2/s3 arrive in sync with out_valid
     localparam STOKES_DELAY = CORDIC_ITER + 1;
-    reg signed [STOKES_W-1:0] s1_delay [0:STOKES_DELAY-1];
-    reg signed [STOKES_W-1:0] s2_delay [0:STOKES_DELAY-1];
-    reg signed [STOKES_W-1:0] s3_delay [0:STOKES_DELAY-1];
+    reg signed [STOKES_W-1:0] s1_delay       [0:STOKES_DELAY-1];
+    reg signed [STOKES_W-1:0] s2_delay       [0:STOKES_DELAY-1];
+    reg signed [STOKES_W-1:0] s3_delay       [0:STOKES_DELAY-1];
+    reg                       pass_sel_delay  [0:STOKES_DELAY-1];
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             s1_delay[0] <= 0; s2_delay[0] <= 0; s3_delay[0] <= 0;
+            pass_sel_delay[0] <= 0;
         end else begin
             s1_delay[0] <= s1_d;
             s2_delay[0] <= s2_d;
             s3_delay[0] <= s3_d;
+            pass_sel_delay[0] <= pass_sel_d;
         end
     end
 
@@ -123,10 +131,12 @@ module state_decoder #(
             always @(posedge clk or negedge rst_n) begin
                 if (!rst_n) begin
                     s1_delay[j] <= 0; s2_delay[j] <= 0; s3_delay[j] <= 0;
+                    pass_sel_delay[j] <= 0;
                 end else begin
                     s1_delay[j] <= s1_delay[j-1];
                     s2_delay[j] <= s2_delay[j-1];
                     s3_delay[j] <= s3_delay[j-1];
+                    pass_sel_delay[j] <= pass_sel_delay[j-1];
                 end
             end
         end
@@ -180,21 +190,23 @@ module state_decoder #(
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            psi_out   <= 0;
-            chi_out   <= 0;
-            delta_out <= 0;
-            s1_out    <= 0;
-            s2_out    <= 0;
-            s3_out    <= 0;
-            out_valid <= 0;
+            psi_out      <= 0;
+            chi_out      <= 0;
+            delta_out    <= 0;
+            s1_out       <= 0;
+            s2_out       <= 0;
+            s3_out       <= 0;
+            out_valid    <= 0;
+            pass_sel_out <= 0;
         end else begin
-            psi_out   <= $signed(psi_raw) >>> 1;
-            chi_out   <= $signed(chi_raw) >>> 1;
-            delta_out <= delta_raw;
-            s1_out    <= s1_delay[STOKES_DELAY-1];
-            s2_out    <= s2_delay[STOKES_DELAY-1];
-            s3_out    <= s3_delay[STOKES_DELAY-1];
-            out_valid <= chi_valid;
+            psi_out      <= $signed(psi_raw) >>> 1;
+            chi_out      <= $signed(chi_raw) >>> 1;
+            delta_out    <= delta_raw;
+            s1_out       <= s1_delay[STOKES_DELAY-1];
+            s2_out       <= s2_delay[STOKES_DELAY-1];
+            s3_out       <= s3_delay[STOKES_DELAY-1];
+            out_valid    <= chi_valid;
+            pass_sel_out <= pass_sel_delay[STOKES_DELAY-1];
         end
     end
 
